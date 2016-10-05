@@ -2,11 +2,10 @@
 /**
  * Write a description of FindGeneSimpleAndTest here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Manuel Alonso) 
+ * @version (Oct 2016)
  */
 import edu.duke.*;
-//import java.io.*;
 
 public class FindGene{
 	public static boolean IsMultipleOfX(int num, int x){
@@ -106,10 +105,7 @@ public class FindGene{
     	// reading DNA from file (dna.txt)
         FileResource dnafile = new FileResource();
         for (String dna: dnafile.lines()){
-        	// *** UPDATE METHODS USED HERE ***
-        	System.out.println("dna:" + dna);
-            //String gene = FindGeneSimple(dna);
-            //if(gene == ""){System.out.println("//");}
+        	FindMultipleGenes(dna);
         }
     }
     public static void TestDNAs(){
@@ -119,8 +115,9 @@ public class FindGene{
     	FindMultipleGenes("ATGCCCTAA");
     }
     public static void main(String[] args){
-    	//TestDNAs(); // OK
-    	ReadDNAFile(); // <-- work on implementing this method.
+    	// Use only one of the following methods
+    	TestDNAs();
+    	//ReadDNAFile();
     }
 }
 
