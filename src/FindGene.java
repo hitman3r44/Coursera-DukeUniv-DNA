@@ -8,6 +8,7 @@
 import edu.duke.*;
 
 public class FindGene{
+	static int genesCount = 0;
 	public static boolean IsMultipleOfX(int num, int x){
 		if(num < 3){return false;}
 		if(num % x == 0  && num / x >= 1){return true;}
@@ -47,8 +48,8 @@ public class FindGene{
 			return "";
 		}
 		int stopCodon1Pos = FindCodon(dna, "TAA", searchFromPos + codonLen);
-		int stopCodon2Pos = FindCodon(dna, "TAA", searchFromPos + codonLen);
-		int stopCodon3Pos = FindCodon(dna, "TAA", searchFromPos + codonLen);
+		int stopCodon2Pos = FindCodon(dna, "TAG", searchFromPos + codonLen);
+		int stopCodon3Pos = FindCodon(dna, "TGA", searchFromPos + codonLen);
 		// return empty strings if no stop codon its found or
 		// if none of the sequences found is divisible by 3.
 		if(stopCodon1Pos == -1 && stopCodon2Pos == -1 && stopCodon3Pos == -1){
@@ -94,6 +95,7 @@ public class FindGene{
 			System.out.println("  seq: " + gene);
 			System.out.println("  pos: " + searchPos);
 			System.out.println("  len: " + gene.length());
+			genesCount++;
 			searchPos = dna.indexOf(gene,searchPos) + gene.length();
 			if(searchPos < dna.length() - codonLen * 2){
 				System.out.println("  ---");	
@@ -110,14 +112,16 @@ public class FindGene{
     }
     public static void TestDNAs(){
     	FindMultipleGenes("ATGCCTAA");
-    	FindMultipleGenes("ATGCCCTAAATGCCCTAACCCG");
+    	FindMultipleGenes("ATGCCCTAAATGCCCTAGCCCG");
+    	FindMultipleGenes("ATGCCCTAAATGCCCTAGCCCGATGCCCCCCTGA");
     	FindMultipleGenes("");
-    	FindMultipleGenes("ATGCCCTAA");
+    	FindMultipleGenes("ATGCCCTGAAAAGGGCC");
     }
     public static void main(String[] args){
     	// Use only one of the following methods
     	TestDNAs();
     	//ReadDNAFile();
+    	System.out.println("Total genes found: " + genesCount);
     }
 }
 
