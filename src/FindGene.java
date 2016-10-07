@@ -9,6 +9,12 @@ import edu.duke.*;
 
 public class FindGene{
 	static int genesCount = 0;
+	static StorageResource genes_found = new StorageResource();
+	public static void PrintGenesFound(){
+		for (String s : genes_found.data()){
+			System.out.println(">" + s);
+		}
+	}
 	public static boolean IsMultipleOfX(int num, int x){
 		if(num < 3){return false;}
 		if(num % x == 0  && num / x >= 1){return true;}
@@ -92,6 +98,8 @@ public class FindGene{
 				System.out.println("//");
 				return ;
 			}
+			// StorageResource() object to save the genes
+			genes_found.add(gene);
 			System.out.println("  seq: " + gene);
 			System.out.println("  pos: " + searchPos);
 			System.out.println("  len: " + gene.length());
@@ -122,6 +130,7 @@ public class FindGene{
     	TestDNAs();
     	//ReadDNAFile();
     	System.out.println("Total genes found: " + genesCount);
+    	PrintGenesFound();
     }
 }
 
