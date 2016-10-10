@@ -8,8 +8,25 @@
 import edu.duke.*;
 
 public class FindGene{
+	//counting genes
 	static int genesCount = 0;
+	//storing genes
 	static StorageResource genes_found = new StorageResource();
+	public static float cgRatio(String gene){
+		int cg = 0;
+		float ratio = 0;
+		for (char base: gene.toLowerCase().toCharArray()){
+			if(base == 'c' || base == 'g'){
+				cg++;	
+			}
+		}
+		if(cg == 0  || gene.length() == 0){
+			ratio = 0;
+		}else{
+			ratio = (float) cg/gene.length();
+		}
+		return ratio;
+	}
 	public static void PrintGenesFound(){
 		for (String s : genes_found.data()){
 			System.out.println(">" + s);
@@ -103,6 +120,7 @@ public class FindGene{
 			System.out.println("  seq: " + gene);
 			System.out.println("  pos: " + searchPos);
 			System.out.println("  len: " + gene.length());
+			System.out.println("  cgR: " + String.format( "%.2f", cgRatio(gene)));
 			genesCount++;
 			searchPos = dna.indexOf(gene,searchPos) + gene.length();
 			if(searchPos < dna.length() - codonLen * 2){
