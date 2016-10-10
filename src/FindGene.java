@@ -8,10 +8,29 @@
 import edu.duke.*;
 
 public class FindGene{
+	//codon length
+	static int codonLen = 3;
 	//counting genes
 	static int genesCount = 0;
 	//storing genes
 	static StorageResource genes_found = new StorageResource();
+	public static int countCodonOccurrences(String gene, String codon){
+		int occurrences = 0;
+		int searchPos = 0;		
+		if(gene.length() < 9 || codon.length() < 3){
+			return -1;
+		}
+		while(true){
+			searchPos = gene.indexOf(codon,searchPos);
+			if(searchPos != -1 && searchPos <= gene.length() - codonLen * 2 && IsMultipleOfX(searchPos,3)){
+				occurrences++;
+				searchPos+=codonLen;
+			}else{
+				break;
+			}
+		}
+		return occurrences;
+	}
 	public static float cgRatio(String gene){
 		int cg = 0;
 		float ratio = 0;
@@ -64,7 +83,6 @@ public class FindGene{
 	}
 	public static String FindSingleGene(String dna, int searchFromPos){
 		String gene = "";
-		int codonLen = 3;
 		int startCodonPos = FindCodon(dna, "ATG", searchFromPos);
 		if(startCodonPos == -1){
 			//System.out.println("LOG: v-- No start codon found. --v");
@@ -121,6 +139,7 @@ public class FindGene{
 			System.out.println("  pos: " + searchPos);
 			System.out.println("  len: " + gene.length());
 			System.out.println("  cgR: " + String.format( "%.2f", cgRatio(gene)));
+			System.out.println(" CTGs: " + countCodonOccurrences(gene, "CTG"));
 			genesCount++;
 			searchPos = dna.indexOf(gene,searchPos) + gene.length();
 			if(searchPos < dna.length() - codonLen * 2){
@@ -141,7 +160,8 @@ public class FindGene{
     	FindMultipleGenes("ATGCCCTAAATGCCCTAGCCCG");
     	FindMultipleGenes("ATGCCCTAAATGCCCTAGCCCGATGCCCCCCTGA");
     	FindMultipleGenes("");
-    	FindMultipleGenes("ATGCCCTGAAAAGGGCC");
+    	FindMultipleGenes("ATGAACTGATAG");
+    	FindMultipleGenes("ATGAACCTGCTGAAACTGTAG");
     }
     public static void main(String[] args){
     	// Use only one of the following methods
